@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { Server, Cpu, HardDrive, Network, ShieldCheck } from 'lucide-react';
 
 export function VMEnvironment() {

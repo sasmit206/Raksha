@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { 
   Activity, ShieldAlert, Cpu, Network, ArrowRight, 
-  Target, ShieldCheck, FileKey, Terminal, Zap, GitCommit, Database 
+  Target, ShieldCheck, FileKey, Terminal, GitCommit, Database 
 } from 'lucide-react';
 import HoldButton from '../components/HoldButton';
 
@@ -348,7 +348,7 @@ function RiskBar({ label, value, max }: any) {
   )
 }
 
-function PipelineNode({ label, status, meta, isFirst, isLast }: any) {
+function PipelineNode({ label, status, meta, isLast }: any) {
   return (
     <div className="flex gap-4 relative group">
       {!isLast && <div className="absolute left-2.5 top-6 bottom-[-8px] w-[1px] bg-border/50" />}

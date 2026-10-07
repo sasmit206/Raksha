@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { ShieldCheck, ArrowRight, ServerCrash } from 'lucide-react';
 
 export function Recommendations() {

@@ -1,5 +1,4 @@
-import React from 'react';
-import { BrainCircuit, Network, Activity } from 'lucide-react';
+import { Network } from 'lucide-react';
 
 export function MLAnalysis() {
   return (

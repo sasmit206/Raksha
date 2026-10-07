@@ -130,7 +130,7 @@ export function Login({ onLogin }: { onLogin: (token: string) => void }) {
                     setPassword(code);
                     if (status !== 'idle') setStatus('idle');
                   }}
-                  onComplete={async (code: string) => {
+                  onComplete={async () => {
                     // Handled by form submission
                   }}
                   accentColor="#4f46e5"

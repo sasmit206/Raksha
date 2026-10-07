@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { GitMerge, Activity, ShieldCheck, ShieldAlert } from 'lucide-react';
+import { GitMerge, ShieldCheck } from 'lucide-react';
 
 export function Patterns() {
   const [patterns, setPatterns] = useState<any[]>([]);

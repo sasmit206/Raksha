@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { Search, Filter, Download } from 'lucide-react';
 
 export function Telemetry() {

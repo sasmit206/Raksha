@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { Terminal, Activity } from 'lucide-react';
+import { Terminal } from 'lucide-react';
 
 export function LiveMonitor() {
   const [logs, setLogs] = useState<any[]>([]);
