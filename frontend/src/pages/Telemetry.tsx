@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Search, Filter, Download } from 'lucide-react';
 
 export function Telemetry() {

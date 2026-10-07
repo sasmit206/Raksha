@@ -1,3 +1,4 @@
+import { useState, useRef } from 'react';
 import { Lock, Unlock, FileText, Image as ImageIcon, Upload, Loader2 } from 'lucide-react';
 
 export function SecureAssets() {

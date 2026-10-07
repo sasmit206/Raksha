@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { GitMerge, ShieldCheck } from 'lucide-react';
 
 export function Patterns() {

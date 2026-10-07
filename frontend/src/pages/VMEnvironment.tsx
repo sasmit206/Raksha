@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Server, Cpu, HardDrive, Network, ShieldCheck } from 'lucide-react';
 
 export function VMEnvironment() {

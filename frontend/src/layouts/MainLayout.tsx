@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Shield, Activity, Database, TriangleAlert, GitBranch, 
   BrainCircuit, ShieldCheck, Server, FileText, Settings, FlaskConical, Bell, User, HelpCircle, FileDown, Sheet
@@ -13,9 +13,9 @@ interface MainLayoutProps {
 }
 
 export function MainLayout({ children, activeTab, setActiveTab, onLogout }: MainLayoutProps) {
-  const [dockerAvailable, setDockerAvailable] = React.useState(false);
+  const [dockerAvailable, setDockerAvailable] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch('http://localhost:8000/api/health')
       .then(res => res.json())
       .then(data => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 // Note: SplitText and ScrambleTextPlugin are premium GSAP plugins.
 // For this to work in production, a Club GSAP membership is required.

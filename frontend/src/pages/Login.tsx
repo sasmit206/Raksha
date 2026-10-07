@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Shield, Loader2 } from 'lucide-react';
 import CodeSlots from '../components/CodeSlots';
 import PixelCard from '../components/PixelCard';

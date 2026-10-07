@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { animate, motion, motionValue, useMotionValue, useReducedMotion, useTransform } from 'framer-motion';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { Tick02Icon } from '@hugeicons/core-free-icons';
@@ -301,6 +301,7 @@ export default function CodeSlots({
         checkMv.jump(1);
         return;
       }
+      // @ts-ignore
       animate(openMv, 1, { duration: WASH_IN, ease: EASE_OUT });
       drops.forEach((d: any, k: number) =>
         animate(d, 1, { type: 'spring', duration: 0.3, bounce: 0, delay: SINK_DELAY + k * SINK_STEP })
@@ -316,7 +317,9 @@ export default function CodeSlots({
       setVeiled(false);
       return;
     }
+    // @ts-ignore
     animate(checkMv, 0, { duration: 0.15, ease: EASE_OUT });
+    // @ts-ignore
     animate(openMv, 0, { duration: WASH_OUT, ease: EASE_OUT, delay: 0.06 }).then(() => {
       if (openMv.get() === 0) setVeiled(false);
     });

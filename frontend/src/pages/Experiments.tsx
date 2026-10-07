@@ -1,4 +1,4 @@
-import { FlaskConical, Play, CheckCircle } from 'lucide-react';
+import HoldButton from '../components/HoldButton';
 
 export function Experiments({ setActiveTab }: { setActiveTab?: (t: string) => void }) {
   

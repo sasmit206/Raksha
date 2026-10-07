@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './Folder.css';
 
 const darkenColor = (hex: string, percent: number) => {
@@ -57,7 +57,7 @@ const Folder = ({ color = '#5227FF', size = 1, items = [], className = '' }: any
     });
   };
 
-  const handlePaperMouseLeave = (e: any, index: number) => {
+  const handlePaperMouseLeave = (_: any, index: number) => {
     setPaperOffsets(prev => {
       const newOffsets = [...prev];
       newOffsets[index] = { x: 0, y: 0 };

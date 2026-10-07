@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import React, { useRef, useEffect, forwardRef } from 'react';
+import { useRef, useEffect, forwardRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { EffectComposer, wrapEffect } from '@react-three/postprocessing';
 import { Effect } from 'postprocessing';
@@ -143,6 +143,7 @@ class RetroEffectImpl extends Effect {
       ['pixelSize', new THREE.Uniform(2.0)]
     ]);
     super('RetroEffect', ditherFragmentShader, { uniforms });
+    // @ts-ignore
     this.uniforms = uniforms;
   }
   set colorNum(v: number) {
@@ -163,7 +164,7 @@ const WrappedRetro = wrapEffect(RetroEffectImpl);
 
 const RetroEffect = forwardRef<any, any>((props, ref) => {
   const { colorNum, pixelSize } = props;
-  return <WrappedRetro ref={ref} colorNum={colorNum} pixelSize={pixelSize} />;
+  return <WrappedRetro ref={ref} {...{ colorNum, pixelSize }} />;
 });
 RetroEffect.displayName = 'RetroEffect';
 
