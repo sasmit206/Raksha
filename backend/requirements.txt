@@ -8,3 +8,6 @@ docker
 pydantic
 cryptography
 python-multipart
+passlib[bcrypt]
+python-jose[cryptography]
+slowapi
