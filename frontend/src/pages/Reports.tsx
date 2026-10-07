@@ -4,7 +4,7 @@ export function Reports() {
   
   const exportCSV = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/telemetry?limit=1000');
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/telemetry?limit=1000`);
       const data = await res.json();
       if (!data || data.length === 0) return alert("No telemetry to export.");
       
@@ -29,9 +29,9 @@ export function Reports() {
   const exportPDF = async () => {
     try {
       const [summary, anomalies, patterns] = await Promise.all([
-        fetch('http://localhost:8000/api/dashboard/summary').then(r => r.json()),
-        fetch('http://localhost:8000/api/anomalies').then(r => r.json()),
-        fetch('http://localhost:8000/api/patterns').then(r => r.json()),
+        fetch(`${import.meta.env.VITE_API_URL}/api/dashboard/summary`).then(r => r.json()),
+        fetch(`${import.meta.env.VITE_API_URL}/api/anomalies`).then(r => r.json()),
+        fetch(`${import.meta.env.VITE_API_URL}/api/patterns`).then(r => r.json()),
       ]);
 
       const printWindow = window.open('', '', 'width=800,height=800');

@@ -5,7 +5,7 @@ export function Anomalies() {
   const [anomalies, setAnomalies] = useState<any[]>([]);
 
   const fetchAnomalies = () => {
-    fetch('http://localhost:8000/api/anomalies')
+    fetch(`${import.meta.env.VITE_API_URL}/api/anomalies`)
       .then(res => res.json())
       .then(data => setAnomalies(data))
       .catch(err => console.error(err));

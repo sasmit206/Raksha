@@ -5,7 +5,7 @@ export function Patterns() {
   const [patterns, setPatterns] = useState<any[]>([]);
 
   const fetchPatterns = () => {
-    fetch('http://localhost:8000/api/patterns')
+    fetch(`${import.meta.env.VITE_API_URL}/api/patterns`)
       .then(res => res.json())
       .then(data => setPatterns(data))
       .catch(err => console.error(err));

@@ -4,7 +4,7 @@ export function Experiments({ setActiveTab }: { setActiveTab?: (t: string) => vo
   
   const runExperiment = (scenarioId: string) => {
     const token = localStorage.getItem('token');
-    fetch(`http://localhost:8000/api/simulation/start?scenario=${scenarioId}`, { 
+    fetch(`${import.meta.env.VITE_API_URL}/api/simulation/start?scenario=${scenarioId}`, { 
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`

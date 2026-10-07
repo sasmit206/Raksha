@@ -5,7 +5,7 @@ export function Recommendations() {
   const [recs, setRecs] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/recommendations')
+    fetch(`${import.meta.env.VITE_API_URL}/api/recommendations`)
       .then(res => res.json())
       .then(data => setRecs(data))
       .catch(err => console.error(err));
@@ -48,7 +48,7 @@ export function Recommendations() {
               
               <button 
                 onClick={() => {
-                  fetch('http://localhost:8000/api/simulation/evaluate', { method: 'POST' })
+                  fetch(`${import.meta.env.VITE_API_URL}/api/simulation/evaluate`, { method: 'POST' })
                     .then(() => alert('Evaluation mode started! The simulation will now re-run assuming mitigations are in place to demonstrate controlled comparison.'))
                     .catch(err => console.error(err));
                 }}

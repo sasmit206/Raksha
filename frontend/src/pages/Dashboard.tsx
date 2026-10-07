@@ -13,7 +13,7 @@ export function Dashboard({ setActiveTab }: DashboardProps) {
   const [summary, setSummary] = useState<any>(null);
 
   const fetchSummary = () => {
-    fetch('http://localhost:8000/api/dashboard/summary')
+    fetch(`${import.meta.env.VITE_API_URL}/api/dashboard/summary`)
       .then((res) => res.json())
       .then((data) => setSummary(data))
       .catch((err) => console.error(err));
@@ -27,7 +27,7 @@ export function Dashboard({ setActiveTab }: DashboardProps) {
 
   const runDemo = () => {
     const token = localStorage.getItem('token');
-    fetch('http://localhost:8000/api/simulation/start?scenario=demo', { 
+    fetch(`${import.meta.env.VITE_API_URL}/api/simulation/start?scenario=demo`, { 
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`

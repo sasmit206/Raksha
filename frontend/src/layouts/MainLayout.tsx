@@ -16,7 +16,7 @@ export function MainLayout({ children, activeTab, setActiveTab, onLogout }: Main
   const [dockerAvailable, setDockerAvailable] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/health')
+    fetch(`${import.meta.env.VITE_API_URL}/api/health`)
       .then(res => res.json())
       .then(data => {
         if (data.dockerAvailable) setDockerAvailable(true);

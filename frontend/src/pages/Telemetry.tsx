@@ -5,7 +5,7 @@ export function Telemetry() {
   const [events, setEvents] = useState<any[]>([]);
 
   const fetchEvents = () => {
-    fetch('http://localhost:8000/api/telemetry?limit=100')
+    fetch(`${import.meta.env.VITE_API_URL}/api/telemetry?limit=100`)
       .then(res => res.json())
       .then(data => setEvents(data))
       .catch(err => console.error(err));

@@ -21,7 +21,7 @@ export function SecureAssets() {
         formData.append('encrypted_text', textInput);
       }
 
-      const response = await fetch(`http://localhost:8000/api/crypto/${action}/text`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/crypto/${action}/text`, {
         method: 'POST',
         body: formData,
       });
@@ -45,7 +45,7 @@ export function SecureAssets() {
       const formData = new FormData();
       formData.append('file', selectedFile);
 
-      const response = await fetch(`http://localhost:8000/api/crypto/${action}/file`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/crypto/${action}/file`, {
         method: 'POST',
         body: formData,
       });
@@ -192,7 +192,7 @@ export function SecureAssets() {
                   try {
                     const formData = new FormData();
                     formData.append('file', selectedFile);
-                    const res = await fetch(`http://localhost:8000/api/crypto/honeytoken/deploy`, {
+                    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/crypto/honeytoken/deploy`, {
                       method: 'POST',
                       body: formData,
                     });
