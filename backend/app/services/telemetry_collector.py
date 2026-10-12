@@ -72,8 +72,16 @@ class TelemetryCollector:
             return evt
         elif "FILE" in line:
             evt["source"] = "FILE"
-            evt["event_type"] = "shadow_file_access"
-            evt["severity"] = "critical"
+            if "honeytoken" in line.lower():
+                if "deployed" in line.lower():
+                    evt["event_type"] = "honeytoken_deployment"
+                    evt["severity"] = "info"
+                else:
+                    evt["event_type"] = "honeytoken_access"
+                    evt["severity"] = "critical"
+            else:
+                evt["event_type"] = "shadow_file_access"
+                evt["severity"] = "critical"
             return evt
         elif "NETWORK" in line:
             evt["source"] = "NETWORK"

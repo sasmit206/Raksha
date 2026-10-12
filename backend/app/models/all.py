@@ -12,13 +12,15 @@ class EncryptedString(TypeDecorator):
 
     def process_bind_param(self, value, dialect):
         if value is not None:
-            return encrypt_text(value)
+            res = encrypt_text(value)
+            return res if isinstance(res, str) else res.get("encrypted_base64")
         return value
 
     def process_result_value(self, value, dialect):
         if value is not None:
             try:
-                return decrypt_text(value)
+                res = decrypt_text(value)
+                return res if isinstance(res, str) else res.get("decrypted_text")
             except Exception:
                 return value # Fallback for unencrypted legacy data
         return value

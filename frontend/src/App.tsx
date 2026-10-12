@@ -10,8 +10,8 @@ import { MLAnalysis } from './pages/MLAnalysis'
 import { Experiments } from './pages/Experiments'
 import { Recommendations } from './pages/Recommendations'
 import { Reports } from './pages/Reports'
+import { Honeytoken } from './pages/Honeytoken'
 import { Settings } from './pages/Settings'
-import { SecureAssets } from './pages/SecureAssets'
 import { Login } from './pages/Login'
 
 function App() {
@@ -43,8 +43,8 @@ function App() {
       {activeTab === 'Experiments' && <Experiments setActiveTab={setActiveTab} />}
       {activeTab === 'Recommendations' && <Recommendations />}
       {activeTab === 'VM / Environment' && <VMEnvironment />}
-      {activeTab === 'Secure Assets' && <SecureAssets />}
-      {activeTab === 'Reports' && <Reports />}
+      {activeTab === 'Session Integrity' && <Reports />}
+      {activeTab === 'Deploy Honeytoken' && <Honeytoken />}
       {activeTab === 'Settings' && <Settings />}
     </MainLayout>
   )

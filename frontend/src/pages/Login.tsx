@@ -84,10 +84,6 @@ export function Login({ onLogin }: { onLogin: (token: string) => void }) {
             </div>
             <span className="font-extrabold text-xl tracking-widest font-['Wallpoet']">RAKSHA</span>
           </div>
-          <div className="hidden md:flex gap-4">
-            <button className="px-4 py-1.5 border border-white/20 rounded-md text-xs font-bold tracking-wide hover:bg-white/10 transition-colors uppercase">Documentation</button>
-            <button className="px-4 py-1.5 bg-white text-black rounded-md text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors uppercase">Get Started</button>
-          </div>
         </div>
 
         {/* Form Container */}

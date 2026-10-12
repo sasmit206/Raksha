@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { 
   Shield, Activity, Database, TriangleAlert, GitBranch, 
-  BrainCircuit, ShieldCheck, Server, FileText, Settings, FlaskConical, Bell, User, HelpCircle, FileDown, Sheet
+  BrainCircuit, ShieldCheck, Server, Target, FileText, Settings, FlaskConical, Bell, User, HelpCircle, FileDown, Sheet
 } from 'lucide-react';
 import Folder from '../components/Folder';
 
@@ -47,12 +47,13 @@ export function MainLayout({ children, activeTab, setActiveTab, onLogout }: Main
         { name: 'Experiments', icon: FlaskConical },
         { name: 'Recommendations', icon: ShieldCheck },
         { name: 'VM / Environment', icon: Server },
-        { name: 'Secure Assets', icon: FileText },
+        { name: 'Deploy Honeytoken', icon: Target },
       ]
     },
     {
       group: "SYSTEM",
       items: [
+        { name: 'Session Integrity', icon: FileText },
         { name: 'Settings', icon: Settings },
       ]
     }

@@ -24,9 +24,9 @@ RECOMMENDATION_MAP = {
         "Restrict unexpected outbound connections"
     ],
     "P001": [
-        "IMMEDIATE ACTION: Increase auditing across affected telemetry sources",
+        "IMMEDIATE ACTION: Isolate affected hosts from the network",
         "IMMEDIATE ACTION: Investigate account/process context for privilege escalation",
-        "IMMEDIATE ACTION: Restrict suspicious access pathways"
+        "IMMEDIATE ACTION: Reset compromised credentials"
     ]
 }
 
@@ -39,14 +39,16 @@ def generate_recommendations(events: List[dict], patterns: List[dict]):
     
     # Process patterns first (higher priority)
     for p in patterns:
-        if p["name"] == "Multi-stage privilege and protected access":
+        name = p.get("name", "")
+        # Match new dynamic pattern names
+        if "Kill Chain" in name or "Exfiltration" in name or "Privilege Escalation" in name or "High-Frequency" in name:
             recs = RECOMMENDATION_MAP.get("P001", [])
             for r in recs:
                 if r not in seen:
                     recommendations.append({
                         "id": str(uuid.uuid4()),
                         "title": r,
-                        "description": f"Generated due to detection of pattern: {p['name']}",
+                        "description": f"Generated due to detection of critical pattern: {name}",
                         "priority": "CRITICAL",
                         "action_type": "Mitigation",
                         "target_entity": "Multiple Systems",

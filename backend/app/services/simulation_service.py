@@ -187,6 +187,7 @@ CMD ["/start.sh"]
             # Place it in /home/admin
             self.active_containers[vm_id].put_archive("/home/admin/", tar_stream)
             print(f"Real Mode: Honeytoken '{filename}' injected into /home/admin/ in {vm_id}")
+            self.run_command(vm_id, f"sh -c 'logger -t FILE \"Honeytoken {filename} successfully deployed\"'")
             return True
         except Exception as e:
             print(f"Failed to inject honeytoken: {e}")
