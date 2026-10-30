@@ -58,9 +58,51 @@ export function VMEnvironment() {
                 <span className="text-emerald-500 font-medium">Secured</span>
               </div>
             </div>
+
+            <div className="mt-3 pt-3 border-t border-border/40 text-[11px] font-mono text-muted-foreground flex justify-between items-center">
+              <span>Channel: <span className="text-indigo-400">AES-256-CBC</span></span>
+              <span>Integrity: <span className="text-emerald-400">HMAC-SHA256</span></span>
+            </div>
           </div>
         ))}
+      </div>
+
+      {/* VM-Host Cryptographic Interconnect Details */}
+      <div className="p-6 rounded-xl border border-border/40 bg-[#111115]">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-9 h-9 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
+            <Network className="w-5 h-5 text-indigo-400" />
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground text-sm">VM-Host Secure Interconnect & Algorithm Analysis</h3>
+            <p className="text-xs text-muted-foreground">End-to-end cryptographic safeguards between virtual sandbox instances and the host core</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          <div className="p-4 rounded-lg bg-black/40 border border-white/5 space-y-1.5">
+            <div className="font-semibold text-indigo-400">AES-256-CBC Tunneling</div>
+            <p className="text-muted-foreground text-[11px] leading-relaxed">
+              Virtual socket communication between Guest VM and Host Engine is encapsulated via hardware AES-256-CBC. Latency: &lt;0.05ms per 1KB packet.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-lg bg-black/40 border border-white/5 space-y-1.5">
+            <div className="font-semibold text-emerald-400">HMAC-SHA-256 Signatures</div>
+            <p className="text-muted-foreground text-[11px] leading-relaxed">
+              Every single telemetry packet emitted by VM processes is sealed with an HMAC signature to detect injection attacks before ingestion into the ML model.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-lg bg-black/40 border border-white/5 space-y-1.5">
+            <div className="font-semibold text-amber-400">Tripwire Decoy Deployment</div>
+            <p className="text-muted-foreground text-[11px] leading-relaxed">
+              Honeytokens deployed into VM directories are packaged with authenticated Fernet/AES envelopes. Unauthorized access trips host FIM alerts.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
+

@@ -13,6 +13,7 @@ import { Reports } from './pages/Reports'
 import { Honeytoken } from './pages/Honeytoken'
 import { Settings } from './pages/Settings'
 import { Login } from './pages/Login'
+import { SecurityAnalysis } from './pages/SecurityAnalysis'
 
 function App() {
   const [activeTab, setActiveTab] = useState('Overview');
@@ -40,6 +41,7 @@ function App() {
       {activeTab === 'Anomalies' && <Anomalies />}
       {activeTab === 'Behavioral Patterns' && <Patterns />}
       {activeTab === 'ML Analysis' && <MLAnalysis />}
+      {activeTab === 'Security & Time Analysis' && <SecurityAnalysis />}
       {activeTab === 'Experiments' && <Experiments setActiveTab={setActiveTab} />}
       {activeTab === 'Recommendations' && <Recommendations />}
       {activeTab === 'VM / Environment' && <VMEnvironment />}
@@ -48,6 +50,7 @@ function App() {
       {activeTab === 'Settings' && <Settings />}
     </MainLayout>
   )
+
 }
 
 export default App

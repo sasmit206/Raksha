@@ -32,11 +32,17 @@ async def api_finalize_report():
     canonical_payload = json.dumps(snapshot, sort_keys=True, separators=(',', ':'))
     
     # 3. Hash the payload
-    session_hash = hashlib.sha256(canonical_payload.encode('utf-8')).hexdigest()
+    payload_bytes = canonical_payload.encode('utf-8')
+    session_hash = hashlib.sha256(payload_bytes).hexdigest()
+    print(f"[HASH-CALC] [Report Finalize] Session {session_id[:8]} | Canonical Payload SHA-256: {session_hash}")
     
+    # Intermediate SHA-512 for high-entropy forensic archiving
+    intermediate_sha512 = hashlib.sha512(payload_bytes).hexdigest()
+    print(f"[HASH-CALC] [Report Finalize] Intermediate High-Entropy Forensic Hash (SHA-512): {intermediate_sha512}")
+
     # 4. Sign the hash (or payload)
     signature = private_key.sign(
-        canonical_payload.encode('utf-8'),
+        payload_bytes,
         padding.PSS(
             mgf=padding.MGF1(hashes.SHA256()),
             salt_length=padding.PSS.MAX_LENGTH
@@ -44,6 +50,8 @@ async def api_finalize_report():
         hashes.SHA256()
     )
     signature_hex = signature.hex()
+    sig_hash = hashlib.sha256(signature).hexdigest()
+    print(f"[HASH-CALC] [Report Finalize] Signature Block SHA-256 Digest: {sig_hash}")
     
     # Extract public key for verification info
     pub_pem = public_key.public_bytes(
@@ -61,8 +69,10 @@ async def api_finalize_report():
             "canonical_payload": canonical_payload,
             "hash_algorithm": "SHA-256",
             "session_hash": session_hash,
+            "intermediate_sha512": intermediate_sha512,
             "signature_algorithm": "RSA-PSS",
             "signature_hex": signature_hex,
+            "signature_hash": sig_hash,
             "public_key_pem": pub_pem,
             "signing_timestamp": timestamp
         },
@@ -90,6 +100,7 @@ async def api_verify_report(payload: Dict[str, Any]):
         )
         # also calculate hash
         computed_hash = hashlib.sha256(canonical_payload.encode('utf-8')).hexdigest()
+        print(f"[HASH-CALC] [Report Verify] Verified Canonical Payload SHA-256: {computed_hash}")
         return {
             "is_valid": True, 
             "reason": "Signature successfully verified.",

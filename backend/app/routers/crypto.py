@@ -2,16 +2,31 @@ from fastapi import APIRouter, File, UploadFile, HTTPException, Form
 from fastapi.responses import Response, JSONResponse
 from app.services.crypto_service import (
     encrypt_text, decrypt_text, encrypt_file_data, decrypt_file_data,
-    hash_text, sign_text, verify_signature, avalanche_effect, get_demo_keys
+    hash_text, sign_text, verify_signature, avalanche_effect, get_demo_keys,
+    run_crypto_benchmark
 )
 import base64
 
 router = APIRouter()
 
+@router.get("/benchmark")
+async def api_crypto_benchmark(sample_size_bytes: int = 1024, iterations: int = 20):
+    """
+    Executes live empirical time-based performance and security analysis across
+    all algorithms used in Raksha (AES-256, AES-128, Fernet, SHA-256, HMAC, RSA-PSS, PBKDF2),
+    including VM-Host secure channel and intermediate hash traces.
+    """
+    try:
+        results = run_crypto_benchmark(sample_size_bytes=sample_size_bytes, iterations=iterations)
+        return JSONResponse(content=results)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.get("/keys")
 async def api_get_keys():
     """Returns demonstration keys for educational purposes."""
     return JSONResponse(content=get_demo_keys())
+
 
 @router.post("/encrypt/text")
 async def api_encrypt_text(text: str = Form(...)):

@@ -15,7 +15,12 @@ def sign_event(event: Dict[str, Any]) -> str:
     # Sort keys to ensure deterministic JSON serialization
     serialized_payload = json.dumps(payload, sort_keys=True, separators=(',', ':')).encode('utf-8')
     
+    # Intermediate hash of canonical event payload before HMAC signing
+    intermediate_payload_hash = hashlib.sha256(serialized_payload).hexdigest()
+    print(f"[HASH-CALC] [Telemetry Sign] Event {payload.get('id', 'unknown')[:8]} | Pre-HMAC Payload SHA-256: {intermediate_payload_hash}")
+    
     signature = hmac.new(SIGNING_SECRET, serialized_payload, hashlib.sha256).hexdigest()
+    print(f"[HASH-CALC] [Telemetry Sign] Event {payload.get('id', 'unknown')[:8]} | HMAC-SHA256 Signature: {signature}")
     return signature
 
 def verify_event(event: Dict[str, Any]) -> bool:
@@ -24,5 +29,8 @@ def verify_event(event: Dict[str, Any]) -> bool:
         return False
         
     expected_signature = sign_event(event)
+    match = hmac.compare_digest(event["signature"], expected_signature)
+    print(f"[HASH-CALC] [Telemetry Verify] Event {event.get('id', 'unknown')[:8]} | Matches: {match} | Expected: {expected_signature[:16]}... | Received: {event['signature'][:16]}...")
     # Use compare_digest to prevent timing attacks
-    return hmac.compare_digest(event["signature"], expected_signature)
+    return match
+

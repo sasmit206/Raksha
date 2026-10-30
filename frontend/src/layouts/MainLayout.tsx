@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { 
   Shield, Activity, Database, TriangleAlert, GitBranch, 
-  BrainCircuit, ShieldCheck, Server, Target, FileText, Settings, FlaskConical, Bell, User, HelpCircle, FileDown, Sheet
+  BrainCircuit, ShieldCheck, Server, Target, FileText, Settings, FlaskConical, Bell, User, HelpCircle, FileDown, Sheet, Lock
 } from 'lucide-react';
 import Folder from '../components/Folder';
 
@@ -39,6 +39,7 @@ export function MainLayout({ children, activeTab, setActiveTab, onLogout }: Main
         { name: 'Anomalies', icon: TriangleAlert },
         { name: 'Behavioral Patterns', icon: GitBranch },
         { name: 'ML Analysis', icon: BrainCircuit },
+        { name: 'Security & Time Analysis', icon: Lock },
       ]
     },
     {
@@ -58,6 +59,7 @@ export function MainLayout({ children, activeTab, setActiveTab, onLogout }: Main
       ]
     }
   ];
+
 
   return (
     <div className="min-h-screen bg-[#0a0a0b] text-foreground flex font-sans selection:bg-indigo-500/30">
