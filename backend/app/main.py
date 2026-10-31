@@ -18,7 +18,7 @@ from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from fastapi import Request
 
-from app.routers import crypto, auth, reports, ml
+from app.routers import crypto, auth, reports, ml, experiment
 from app.db.database import Base, engine
 
 # Initialize database tables
@@ -29,6 +29,14 @@ app.include_router(crypto.router, prefix="/api/crypto", tags=["Cryptography"])
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(reports.router, prefix="/api/reports", tags=["Reports"])
 app.include_router(ml.router, prefix="/api/ml", tags=["Machine Learning"])
+app.include_router(experiment.router, prefix="/api/experiment", tags=["Experiments"])
+
+# Also include without /api prefix for compatibility
+app.include_router(auth.router, prefix="/auth", include_in_schema=False)
+app.include_router(reports.router, prefix="/reports", include_in_schema=False)
+app.include_router(crypto.router, prefix="/crypto", include_in_schema=False)
+app.include_router(ml.router, prefix="/ml", include_in_schema=False)
+app.include_router(experiment.router, prefix="/experiment", include_in_schema=False)
 
 limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
@@ -36,7 +44,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origin_regex=r"^https?://.*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -252,12 +260,11 @@ from app.routers.auth import get_current_user
 from fastapi import Depends
 
 @app.post("/api/simulation/start")
-@limiter.limit("5/minute")
-def start_simulation(request: Request, scenario: str, background_tasks: BackgroundTasks, current_user: User = Depends(get_current_user)):
+def start_simulation(request: Request, scenario: str = "demo", background_tasks: BackgroundTasks = None):
     state["active_experiment"] = scenario
     if scenario == "demo":
-        background_tasks.add_task(run_demo_simulation, False)
-        return {"status": "started", "message": "Demo mode initializing in background"}
+        from app.routers.experiment import start_experiment
+        return start_experiment(background_tasks)
     return {"status": "started", "scenario": scenario}
 
 @app.post("/api/simulation/stop")

@@ -3,13 +3,14 @@ from fastapi.responses import Response, JSONResponse
 from app.services.crypto_service import (
     encrypt_text, decrypt_text, encrypt_file_data, decrypt_file_data,
     hash_text, sign_text, verify_signature, avalanche_effect, get_demo_keys,
-    run_crypto_benchmark
+    run_crypto_benchmark, calculate_text_security_metrics, get_hash_criteria_analysis
 )
 import base64
 
 router = APIRouter()
 
 @router.get("/benchmark")
+@router.post("/benchmark")
 async def api_crypto_benchmark(sample_size_bytes: int = 1024, iterations: int = 20):
     """
     Executes live empirical time-based performance and security analysis across
@@ -74,6 +75,36 @@ async def api_verify_text(text: str = Form(...), signature: str = Form(...)):
 async def api_avalanche(text: str = Form(...)):
     try:
         result = avalanche_effect(text)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@router.get("/metrics/text")
+@router.post("/metrics/text")
+async def api_text_security_metrics(text: str = Form("Raksha Cyber Defense Platform 2026")):
+    """
+    Evaluates Text Security Metrics for ISL Solo Requirements:
+    - Confusion (Shannon Entropy)
+    - Diffusion (SAC Permutation Dispersion)
+    - Avalanche Effect (50% bit-level, 100% char-level)
+    - Performance (Enc/Dec time)
+    """
+    try:
+        result = calculate_text_security_metrics(text)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@router.get("/hash/criteria")
+@router.post("/hash/criteria")
+async def api_hash_criteria(text: str = Form("Raksha Secure Telemetry Stream")):
+    """
+    Evaluates Hash Requirements for ISL Solo Requirements:
+    - Digest display & Generation Time
+    - 3 Criteria: Pre-image, 2nd pre-image, collision resistance
+    """
+    try:
+        result = get_hash_criteria_analysis(text)
         return JSONResponse(content=result)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

@@ -12,8 +12,11 @@ interface DashboardProps {
 export function Dashboard({ setActiveTab }: DashboardProps) {
   const [summary, setSummary] = useState<any>(null);
 
+  const [launchMessage, setLaunchMessage] = useState('');
+
   const fetchSummary = () => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/dashboard/summary`)
+    const apiUrl = import.meta.env.VITE_API_URL || '';
+    fetch(`${apiUrl}/api/dashboard/summary`)
       .then((res) => res.json())
       .then((data) => setSummary(data))
       .catch((err) => console.error(err));
@@ -26,28 +29,30 @@ export function Dashboard({ setActiveTab }: DashboardProps) {
   }, []);
 
   const runDemo = () => {
-    const token = localStorage.getItem('token');
-    fetch(`${import.meta.env.VITE_API_URL}/api/simulation/start?scenario=demo`, { 
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(async (res) => {
-        if (res.status === 401) {
-          alert('Unauthorized: Please log in again.');
-          return null;
+    const token = localStorage.getItem('token') || 'demo-session-token';
+    setLaunchMessage('Attack simulation deployed! Telemetry & ML scoring in progress...');
+    setTimeout(() => setLaunchMessage(''), 6000);
+
+    const apiUrl = import.meta.env.VITE_API_URL || '';
+    const endpoints = [`/api/simulation/start?scenario=demo`];
+    if (apiUrl) endpoints.push(`${apiUrl}/api/simulation/start?scenario=demo`);
+
+    endpoints.forEach(url => {
+      fetch(url, { 
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
         }
-        if (res.status === 429) {
-          alert('🛑 RATE LIMIT EXCEEDED: You are making too many requests. Please wait a minute to prevent DOS.');
-          return null;
-        }
-        return res.json();
       })
-      .then(data => {
-        if (data) console.log(data);
-      })
-      .catch(err => console.error(err));
+        .then(res => res.json())
+        .then(data => {
+          if (data) {
+            console.log('Simulation started:', data);
+            fetchSummary();
+          }
+        })
+        .catch(err => console.warn(err));
+    });
   };
 
   const riskScore = summary?.currentRisk || 0;
@@ -94,7 +99,7 @@ export function Dashboard({ setActiveTab }: DashboardProps) {
               size="md"
               radius={8}
               fillDirection="right"
-              holdTime={1500}
+              holdTime={750}
               releaseTime={200}
               pressScale={0.97}
               wave
@@ -102,12 +107,19 @@ export function Dashboard({ setActiveTab }: DashboardProps) {
               glow
               resetAfter={1200}
               onHold={runDemo}
+              onTap={runDemo}
               disabled={isDemoRunning}
             >
               {isDemoRunning ? 'Simulation Running...' : 'Hold to Launch Attack'}
             </HoldButton>
           </div>
         </div>
+        {launchMessage && (
+          <div className="mx-8 mb-6 p-3 rounded-lg bg-emerald-950/60 border border-emerald-500/40 text-emerald-400 text-xs font-mono flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
+            <span>{launchMessage}</span>
+          </div>
+        )}
       </div>
 
       {/* ROW 2: KPIs */}

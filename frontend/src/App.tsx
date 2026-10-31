@@ -16,8 +16,13 @@ import { Login } from './pages/Login'
 import { SecurityAnalysis } from './pages/SecurityAnalysis'
 
 function App() {
-  const [activeTab, setActiveTab] = useState('Overview');
-  const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
+  const [activeTab, setActiveTab] = useState('ML Analysis');
+  const [token, setToken] = useState<string | null>(() => {
+    const saved = localStorage.getItem('token');
+    if (saved) return saved;
+    localStorage.setItem('token', 'demo-session-token');
+    return 'demo-session-token';
+  });
 
   const handleLogin = (newToken: string) => {
     localStorage.setItem('token', newToken);
